@@ -18,9 +18,9 @@ public class BankAccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<Void> createAccount(@RequestBody BankAccountRequestDTO accountRequestDTO) {
-        accountService.createAccount(accountRequestDTO);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<BankAccountResponseDTO> createAccount(@RequestBody BankAccountRequestDTO accountRequestDTO) {
+         BankAccountResponseDTO responseDTO = accountService.createAccount(accountRequestDTO);
+         return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping
