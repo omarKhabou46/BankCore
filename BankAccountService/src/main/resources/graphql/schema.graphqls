@@ -1,0 +1,22 @@
+type Query {
+  accountList : [Account],
+  accountById (id: String) : Account
+}
+
+type Mutation {
+  createAccount(accountRequestDTO: BankAccountRequestDTO): Account
+}
+
+type Account {
+     id: String,
+     createdAt: String,
+     balance: Float,
+     currency: String,
+     type: String
+}
+
+input BankAccountRequestDTO {
+   balance: Float,
+   currency: String,
+   type: String
+}

@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface AccountService {
     List<BankAccountResponseDTO> getAllAccounts();
-    void createAccount(BankAccountRequestDTO dto);
+    BankAccountResponseDTO createAccount(BankAccountRequestDTO dto);
+
+    BankAccountResponseDTO getAccountById(String id);
 }
