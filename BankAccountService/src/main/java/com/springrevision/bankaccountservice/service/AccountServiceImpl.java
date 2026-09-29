@@ -17,6 +17,7 @@ public class AccountServiceImpl implements AccountService{
 
     private final BankAccountRepo accountRepo;
     private final BankAccountMapper accountMapper;
+    private final BankAccountMapper bankAccountMapper;
 
     @Override
     public List<BankAccountResponseDTO> getAllAccounts() {
@@ -40,5 +41,20 @@ public class AccountServiceImpl implements AccountService{
     public BankAccountResponseDTO getAccountById(String id) {
         Account account = accountRepo.findById(id).orElseThrow(() -> new BankAccountNotFoundAxception("account with id " + id + " not found"));
         return accountMapper.toDto(account);
+    }
+
+    @Override
+    public BankAccountResponseDTO updateAccount(String id, BankAccountRequestDTO bankAccountRequestDTO) {
+        Account account = accountRepo.findById(id).orElseThrow(() -> new BankAccountNotFoundAxception("not found"));
+        account.setBalance(bankAccountRequestDTO.getBalance());
+        account.setCurrency(bankAccountRequestDTO.getCurrency());
+        account.setType(bankAccountRequestDTO.getType());
+        return bankAccountMapper.toDto(accountRepo.save(account));
+    }
+
+    @Override
+    public boolean deleteAccount(String id) {
+        accountRepo.deleteById(id);
+        return true;
     }
 }

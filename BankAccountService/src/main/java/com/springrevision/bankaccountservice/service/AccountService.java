@@ -10,4 +10,7 @@ public interface AccountService {
     BankAccountResponseDTO createAccount(BankAccountRequestDTO dto);
 
     BankAccountResponseDTO getAccountById(String id);
+    BankAccountResponseDTO updateAccount(String id, BankAccountRequestDTO bankAccountRequestDTO);
+    boolean deleteAccount(String id);
+
 }
