@@ -18,8 +18,8 @@ public class BankAccountController {
     private final AccountService accountService;
 
     @PostMapping
-    public ResponseEntity<BankAccountResponseDTO> createAccount(@RequestBody BankAccountRequestDTO accountRequestDTO) {
-         BankAccountResponseDTO responseDTO = accountService.createAccount(accountRequestDTO);
+    public ResponseEntity<BankAccountResponseDTO> createAccount(@RequestBody BankAccountRequestDTO accountRequestDTO, @RequestParam long customerId) {
+         BankAccountResponseDTO responseDTO = accountService.createAccount(accountRequestDTO, customerId);
          return ResponseEntity.ok(responseDTO);
     }
 

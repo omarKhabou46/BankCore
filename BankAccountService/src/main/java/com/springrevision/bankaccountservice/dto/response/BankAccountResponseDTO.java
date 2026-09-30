@@ -1,5 +1,6 @@
 package com.springrevision.bankaccountservice.dto.response;
 
+import com.springrevision.bankaccountservice.model.Customer;
 import com.springrevision.bankaccountservice.model.enumiration.AccountType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +16,5 @@ public class BankAccountResponseDTO {
     private BigDecimal balance;
     private String currency;
     private AccountType type;
+    private Customer customer;
 }
