@@ -1,11 +1,13 @@
 package com.springrevision.bankaccountservice.service;
 
 import com.springrevision.bankaccountservice.dao.BankAccountRepo;
+import com.springrevision.bankaccountservice.dao.CustomerRepo;
 import com.springrevision.bankaccountservice.dto.request.BankAccountRequestDTO;
 import com.springrevision.bankaccountservice.dto.response.BankAccountResponseDTO;
 import com.springrevision.bankaccountservice.exception.BankAccountNotFoundAxception;
 import com.springrevision.bankaccountservice.mapper.BankAccountMapper;
 import com.springrevision.bankaccountservice.model.Account;
+import com.springrevision.bankaccountservice.model.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ public class AccountServiceImpl implements AccountService{
     private final BankAccountRepo accountRepo;
     private final BankAccountMapper accountMapper;
     private final BankAccountMapper bankAccountMapper;
+    private final CustomerRepo customerRepo;
 
     @Override
     public List<BankAccountResponseDTO> getAllAccounts() {
@@ -26,15 +29,20 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public BankAccountResponseDTO createAccount(BankAccountRequestDTO dto) {
-
-        System.out.println("DTO = " + dto);
+    public BankAccountResponseDTO createAccount(
+            BankAccountRequestDTO dto,
+            Long customerId
+    ) {
+        Customer customer = customerRepo.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer not found"));
 
         Account account = accountMapper.requestDTOtoEntity(dto);
 
-        System.out.println("ACCOUNT = " + account);
+        account.setCustomer(customer);
 
-        return accountMapper.toDto(accountRepo.save(account));
+        Account savedAccount = accountRepo.save(account);
+
+        return accountMapper.toDto(savedAccount);
     }
 
     @Override
